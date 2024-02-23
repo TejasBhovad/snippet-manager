@@ -20,6 +20,14 @@
 
 ## Setup
 
+### Install Rust
+https://www.rust-lang.org/tools/install
+
+### Install Tauri CLI with Cargo (will take time)
+```sh 
+cargo install tauri-cli
+```
+
 ```sh
 # install dependencies
 npm i

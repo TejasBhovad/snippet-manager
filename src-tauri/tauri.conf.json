@@ -11,7 +11,9 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "path": {
+        "all": true
+      }
     },
     "bundle": {
       "active": true,
@@ -28,7 +30,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "snippet-manager",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

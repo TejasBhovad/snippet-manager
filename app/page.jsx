@@ -54,6 +54,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <a href="/rohan">rohan</a>
       <input
         type="text"
         className="px-4 py-2 mb-4 text-black bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

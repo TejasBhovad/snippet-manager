@@ -2,6 +2,7 @@ import React from 'react';
 import { LuFolderLock } from "react-icons/lu";
 import { IoIosArrowForward } from "react-icons/io";
 
+
 const Snippetcard = () => {
   return (
     <div className="w-full h-full">

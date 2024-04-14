@@ -5,15 +5,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FaFolder } from "react-icons/fa";
+import { LuFolderLock } from "react-icons/lu";
 
-const DirCard = ({ directory  }) => {
+const SecuredCard = ({ directory  }) => {
   return (
     <div className="text-white w-full px-4">
       <Accordion type="single" collapsible>
         <AccordionItem value={`item-1`}>
           <AccordionTrigger className="text-sm w-full bg-util bg-opacity-30 p-0 px-3 py-2 rounded-md flex items-center justify-start gap-2">
-            <FaFolder className="w-4 h-4 p-0 m-0 rotate-0 transform" />
+            <LuFolderLock className="w-4 h-4 p-0 m-0 rotate-0 transform" />
             {directory.name}
           </AccordionTrigger>
           <AccordionContent className="bg-util bg-opacity-10 border-[1px] border-util py-1 border-opacity-10 flex flex-col gap-0">
@@ -32,4 +32,4 @@ const DirCard = ({ directory  }) => {
   );
 };
 
-export default DirCard;
+export default SecuredCard;

@@ -1,30 +1,25 @@
-'use client'
-import React from 'react';
-import { CgProfile } from "react-icons/cg";
-import { IoIosSettings } from "react-icons/io";
-import { useState } from 'react';
-const Usercard = () => {
-  const [username, setUsername]=useState('default')
-  const [status, setStatus] = useState('online')
-  return (
-    
-    <div>
-      <div className="flex flex-row border-2 border-black bg-indigo-900 p-2 rounded-md w-52 h-16">
-        <CgProfile size={46} color='white' className='pr-1' />
-        <div className='gap-2 flex flex-row'>
-        <div className="flex flex-col gap-1 pl-2">
-          <span className="text-gray-500 text-sm text-white">{username}</span> {/* Increased username size */}
-          <span className='text-gray-500 text-xs'>{status}</span> 
-        </div>
-        
-        <IoIosSettings size={46} color='white' className=' pr-2 pl-2' /> 
-       
-        </div> 
+"use client";
+import React from "react";
+import { FaUserCircle } from "react-icons/fa";
+import { useState } from "react";
 
+const UserCard = () => {
+  const [username, setUsername] = useState("default");
+  const [status, setStatus] = useState("online");
+
+  return (
+    <div className="flex items-center p-5 bg-util bg-opacity-30 rounded-md w-full h-full">
+      <div className="flex-shrink-0">
+        <div className="h-8 w-8 rounded-full flex items-center justify-center">
+          <FaUserCircle className="w-8 h-8 text-white" />
+        </div>
+      </div>
+      <div className="ml-4 items-center flex flex-col">
+        <div className="text-md font-medium text-white">{username}</div>
+        <div className="text-sm text-gray-400">{status}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-export default Usercard;
+export default UserCard;

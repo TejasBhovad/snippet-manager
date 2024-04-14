@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 const Searchbar = () => {
   const [search, setSearch] = useState("");
-//  TODO backend rust function to search snippets
+  //  TODO backend rust function to search snippets
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -13,16 +13,20 @@ const Searchbar = () => {
     }
   };
   return (
-    <div className="flex flex-col w-full h-full relative">
+    <div className="flex flex-col w-full px-4">
       <div className="relative">
-        <FaSearch color="gray" size={25} className="absolute top-0 left-2 h-full flex items-center pl-2 " />
+        <FaSearch
+          color="gray"
+          size={20}
+          className="absolute top-0 left-2 h-full flex items-center  "
+        />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search Snippets..."
           onKeyDown={handleKeyPress}
-          className="rounded-lg border-black border-2 p-2 pl-11 bg-indigo-900 text-white placeholder-white"
+          className="rounded-sm p-2 pl-8 bg-util text-white text-opacity-85 placeholder-white w-full bg-opacity-35 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
     </div>
@@ -30,4 +34,3 @@ const Searchbar = () => {
 };
 
 export default Searchbar;
-

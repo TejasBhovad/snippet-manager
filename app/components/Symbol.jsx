@@ -6,7 +6,9 @@ import { FaRegMinusSquare } from "react-icons/fa";
 const Symbol = () => {
   return (
     <div className='flex gap-4 flex-row pl-3'>
-      <button>
+      <button
+      //  onClick={createFile}
+      >
       <div className="p-2 border-2 border-black w-12 rounded-xl bg-indigo-900">
       <FaFileCirclePlus size={30} color='white'/>
       </div>

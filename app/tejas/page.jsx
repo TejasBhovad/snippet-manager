@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useFileOperations } from "./backend/file";
+import { useFileOperations } from "../backend/file";
 
 const Page = () => {
   const {

@@ -57,6 +57,7 @@ const page = () => {
     "elixir",
   ];
 
+  const [carbonUrl, setCarbonUrl] = useState("");
   const [isEdited, setIsEdited] = useState(false);
   const [fileLanguage, setFileLanguage] = useState(languages[0]); // Default to JavaScript
   const [fileData, setFileData] = useState("");
@@ -195,7 +196,16 @@ const page = () => {
       // Handle rename error (e.g., inform user)
     }
   };
+ 
 
+const handleShare = async () => {
+  //  copy text to clipboard
+  navigator.clipboard.writeText(editedFileDataRef.current);
+  
+}
+
+
+ 
   return (
     <div className="w-full h-full">
       {page !== "default" ? (
@@ -213,12 +223,17 @@ const page = () => {
             <div className="flex items-center h-full">
               {isShared ? (
                 <div className="flex gap-2">
-                  <button className="flex items-center justify-center gap-2 text-white bg-opacity-25 border-gray-500 no-select border-opacity-20 border-[1px] bg-gray-500 p-2 rounded-md">
+                  <button className="flex items-center justify-center gap-2 text-white bg-opacity-25 border-gray-500 no-select border-opacity-20 border-[1px] bg-gray-500 p-2 rounded-md"
+ 
+                    
+                  >
                     <FaExternalLinkSquareAlt />
                   </button>
                   <button
                     className="flex items-center justify-center gap-2 text-white bg-opacity-25 border-red-500 no-select border-opacity-20 border-[1px] bg-red-500 py-1 px-3 rounded-md"
+                    // onclickj set is shared to false
                     onClick={() => setIsShared(false)}
+                    on
                   >
                     <TbUnlink />
                     UnShare
@@ -228,7 +243,7 @@ const page = () => {
                 <div className="flex">
                   <button
                     className="flex items-center justify-center gap-2 text-white bg-opacity-25 border-green-500 no-select border-opacity-20 border-[1px] bg-green-500 py-1 px-3 rounded-md"
-                    onClick={() => setIsShared(true)}
+                    onClick={handleShare}
                   >
                     <FaShareAlt />
                     Share

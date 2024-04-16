@@ -245,13 +245,13 @@ const Sidebar = () => {
           </pre>
         </div> */}
 
-        <SecuredCard
+        {/* <SecuredCard
           directory={{ name: "Directory 2", files: ["File 3", "File 4"] }}
-        />
+        /> */}
       </div>
-      <div className="h-12 w-full px-2">
+      {/* <div className="h-12 w-full px-2">
         <UserCard />
-      </div>
+      </div> */}
     </div>
   );
 };

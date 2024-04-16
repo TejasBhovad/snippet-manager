@@ -10,30 +10,32 @@ const FileOperations = ({
   setClickCreateDirectory,
 }) => {
   return (
-    <div className="flex justify-between flex-row px-4 w-full">
+    <div className="h-auto flex justify-between flex-row px-4 gap-2 w-full">
       <button
+        className="w-1/2 h-full"
         onClick={
           clickCreateFile
             ? () => setClickCreateFile(false)
             : () => setClickCreateFile(true)
         }
       >
-        <div className="w-10 rounded-xl bg-util aspect-square flex items-center justify-center bg-opacity-40">
+        <div className="p-2 w-full rounded-xl bg-util flex items-center justify-center bg-opacity-40">
           <FaFileCirclePlus size={18} color="white" />
         </div>
       </button>
       <button
+        className="w-1/2"
         onClick={
           clickCreateDirectory
             ? () => setClickCreateDirectory(false)
             : () => setClickCreateDirectory(true)
         }
       >
-        <div className="w-10 rounded-xl bg-util aspect-square flex items-center justify-center bg-opacity-40">
+        <div className="p-2 w-full rounded-xl bg-util flex items-center justify-center bg-opacity-40">
           <HiFolderPlus size={18} color="white" />
         </div>
       </button>
-      <button>
+      {/* <button>
         <div className="w-10 rounded-xl bg-util aspect-square flex items-center justify-center bg-opacity-40">
           <IoKeyOutline size={18} color="white" />
         </div>
@@ -42,7 +44,7 @@ const FileOperations = ({
         <div className="w-10 rounded-xl bg-util aspect-square flex items-center justify-center bg-opacity-40">
           <FaRegMinusSquare size={18} color="white" />
         </div>
-      </button>
+      </button> */}
     </div>
   );
 };

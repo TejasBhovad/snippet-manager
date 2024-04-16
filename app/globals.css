@@ -8,6 +8,25 @@ body {
   width: 100%;
   background-color: #0a0b0f;
 }
+/* For Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #171a23; /* primary color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333e7a; /* util color */
+  border-radius: 6px;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333e7a #2c3044;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -23,6 +23,7 @@ const Sidebar = () => {
     deleteDirectory,
     updateDirectory,
   } = useFileOperations();
+  const [search, setSearch] = useState("");
   const [files, setFiles] = useState([]);
   const [directories, setDirectories] = useState([]);
   const [appDir, setAppDir] = useState(null);
@@ -91,7 +92,23 @@ const Sidebar = () => {
       setInputFileName("");
     }
   };
+  const handleClickOutside = (event) => {
+    if (fileRef.current && !fileRef.current.contains(event.target)) {
+      setClickCreateFile(false);
+      setInputFileName("");
+    }
+    if (directoryRef.current && !directoryRef.current.contains(event.target)) {
+      setClickCreateDirectory(false);
+      setInputDirectory("");
+    }
+  };
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const handleDirectoryKeyPress = (event) => {
     if (event.key === "Enter") {
       createDirectoryFunction(inputDirectory);
@@ -150,7 +167,7 @@ const Sidebar = () => {
         maxWidth: "250px",
       }}
     >
-      <Searchbar />
+      <Searchbar search={search} setSearch={setSearch} />
       <FileOperations
         clickCreateFile={clickCreateFile}
         setClickCreateFile={setClickCreateFile}
@@ -164,62 +181,69 @@ const Sidebar = () => {
 
       <div className="w-full flex-grow gap-1 flex flex-col overflow-y-auto">
         {clickCreateFile && (
-          <input
-            ref={fileRef}
-            type="text"
-            value={inputFileName}
-            onChange={handleInputChange}
-            onKeyPress={handleInputKeyPress}
-            className="mb-4"
-          />
+          <div className="w-full px-4">
+            <input
+              ref={fileRef}
+              type="text"
+              value={inputFileName}
+              onChange={handleInputChange}
+              onKeyPress={handleInputKeyPress}
+              className="w-full px-4 bg-util bg-opacity-10 text-white border-none rounded-md p-2 outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+            />
+          </div>
         )}
         {clickCreateDirectory && (
-          <input
-            ref={directoryRef}
-            type="text"
-            value={inputDirectory}
-            onChange={handleDirectoryChange}
-            onKeyPress={handleDirectoryKeyPress}
-            className="mb-4"
-          />
+          <div className="w-full px-4">
+            <input
+              ref={directoryRef}
+              type="text"
+              value={inputDirectory}
+              onChange={handleDirectoryChange}
+              onKeyPress={handleDirectoryKeyPress}
+              className="w-full px-4 bg-util bg-opacity-10 text-white border-none rounded-md p-2 outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+            />
+          </div>
         )}
 
         {files &&
-          Object.keys(files).map((fileName) => {
-            if (ignoredFiles.includes(fileName)) {
-              return null;
-            }
-            const filePath = `${appDir}${fileName}`;
-            return (
-              <FileCard
-                key={fileName}
-                name={fileName}
-                content={files[fileName]}
-                path={filePath}
-              />
-            );
-          })}
+          Object.keys(files)
+            .filter((fileName) => fileName.includes(search))
+            .map((fileName) => {
+              if (ignoredFiles.includes(fileName)) {
+                return null;
+              }
+              const filePath = `${appDir}${fileName}`;
+              return (
+                <FileCard
+                  key={fileName}
+                  name={fileName}
+                  content={files[fileName]}
+                  path={filePath}
+                />
+              );
+            })}
 
         {/* map the directories */}
         {directories &&
-          Object.keys(directories).map((dirName) => {
-            const dirPath = `${appDir}${dirName}`;
-            return (
-              <DirCard
-                key={dirName}
-                name={dirName}
-                files={directories[dirName]}
-                path={dirPath}
-              />
-            );
-          })}
-
-        <div className="absolute left-96">
+          Object.keys(directories)
+            .filter((dirName) => dirName.includes(search))
+            .map((dirName) => {
+              const dirPath = `${appDir}${dirName}`;
+              return (
+                <DirCard
+                  key={dirName}
+                  name={dirName}
+                  files={directories[dirName]}
+                  path={dirPath}
+                />
+              );
+            })}
+        {/* <div className="absolute left-96">
           <pre className="text-white">{JSON.stringify(files, null, 2)}</pre>
           <pre className="text-white">
             {JSON.stringify(directories, null, 2)}
           </pre>
-        </div>
+        </div> */}
 
         <SecuredCard
           directory={{ name: "Directory 2", files: ["File 3", "File 4"] }}

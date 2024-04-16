@@ -3,10 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
-const Searchbar = () => {
-  const [search, setSearch] = useState("");
-  //  TODO backend rust function to search snippets
-
+const Searchbar = ({ search, setSearch }) => {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log("searching for", search);

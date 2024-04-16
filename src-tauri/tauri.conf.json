@@ -56,11 +56,13 @@
     },
     "windows": [
       {
-        "fullscreen": false,
+        "width": 950,
         "height": 600,
+        "minWidth": 800,
+        "minHeight": 600,
         "resizable": true,
-        "title": "snippet-manager",
-        "width": 800
+        "fullscreen": false,
+        "title": "snippet-manager"
       }
     ]
   }

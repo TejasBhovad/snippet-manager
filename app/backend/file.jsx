@@ -97,6 +97,14 @@ export const useFileOperations = () => {
       appDir: appDir,
     });
   };
+  const addFileInDirectory = (dir_name, file_name, file_content) => {
+    return invoke("add_file_in_directory", {
+      dirName: dir_name,
+      fileName: file_name,
+      fileContent: file_content,
+      appDir: appDir,
+    });
+  };
 
   return {
     createFile,
@@ -112,5 +120,6 @@ export const useFileOperations = () => {
     deleteDirectory,
     renameDirectory,
     updateDirectory,
+    addFileInDirectory,
   };
 };

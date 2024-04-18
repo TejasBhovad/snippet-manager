@@ -3,7 +3,7 @@
 
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![greet, add_file, get_files,rename_file,delete_file,update_file,create_directory,delete_directory,rename_directory,update_directory,get_directories,get_file_content_by_path])
+    .invoke_handler(tauri::generate_handler![greet, add_file, get_files,rename_file,delete_file,update_file,create_directory,delete_directory,rename_directory,update_directory,get_directories,get_file_content_by_path,add_file_in_directory])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -169,4 +169,19 @@ fn get_all_files_recursive(dir: &str, dirs: &mut serde_json::Map<String, serde_j
 #[tauri::command]
 fn get_file_content_by_path(file_path: &str) -> Result<String, String> {
   std::fs::read_to_string(file_path).map_err(|e| e.to_string())
+}
+
+//  add file in directory
+#[tauri::command]
+fn add_file_in_directory(file_name: &str, file_content: &str, dir_name: &str, app_dir:&str) ->String {
+  let dir_path = std::path::Path::new(app_dir).join(dir_name);
+  if dir_path.exists() {
+    let file_path = dir_path.join(file_name);
+    if file_path.exists() {
+      return format!("File {} already exists in directory {}", file_name, app_dir.to_string() + dir_name)
+    }
+    std::fs::write(&file_path, file_content).expect("Unable to write file");
+    return format!("File {} created successfully in directory {}", file_name, app_dir.to_string() + dir_name)
+  }
+  format!("Directory {} does not exist", app_dir.to_string() + dir_name)
 }

@@ -3,7 +3,7 @@
 
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![greet, add_file, get_files,rename_file,delete_file,update_file,create_directory,delete_directory,rename_directory,update_directory,get_directories,get_file_content_by_path,add_file_in_directory])
+    .invoke_handler(tauri::generate_handler![greet, add_file, get_files,rename_file,delete_file,update_file,create_directory,delete_directory,rename_directory,update_directory,get_directories,get_file_content_by_path,add_file_in_directory,get_app_dir])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -184,4 +184,18 @@ fn add_file_in_directory(file_name: &str, file_content: &str, dir_name: &str, ap
     return format!("File {} created successfully in directory {}", file_name, app_dir.to_string() + dir_name)
   }
   format!("Directory {} does not exist", app_dir.to_string() + dir_name)
+}
+
+#[tauri::command]
+fn get_app_dir() -> String {
+  let config = tauri::Config::default();
+  let app_dir = tauri::api::path::app_data_dir(&config)
+    .expect("Unable to get app directory");
+  let app_dir_str = app_dir.to_string_lossy().to_string();
+
+
+  // Print the app directory
+  // println!("App directory: {}", app_dir_str);
+
+  app_dir_str
 }

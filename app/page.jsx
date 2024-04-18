@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useContext } from "react";
-import LinkButton from "./components/LinkButton";
-import Path from "./components/Path";
+
 import { FaRegCopy } from "react-icons/fa";
 import ReactAce from "react-ace";
 import {
@@ -65,7 +64,7 @@ const page = () => {
   const [pagesList, setPagesList] = useState([]);
   const [currentPageIndex, setCurrentPageIndex] = useState(-1);
   const fileNameInputRef = useRef(null);
-  const [appDir, setAppDir] = useState("");
+  const [appDir, setAppDir] = useState("none");
   const [isShared, setIsShared] = useState(false);
   const { page, setPage } = useContext(PageContext);
 
@@ -95,13 +94,12 @@ const page = () => {
       await updateFile(page, editedFileDataRef.current);
       setFileData(editedFileDataRef.current);
       // set fiellanguage based on content
-      setFileLanguage(determineLanguage(editedFileDataRef.current));
+      // setFileLanguage(determineLanguage(editedFileDataRef.current));
     } catch (error) {
       console.error(error);
       // Handle update error (e.g., inform user)
     } finally {
       setIsEdited(false); // Reset isEdited even on error
-
     }
   };
 
@@ -119,37 +117,43 @@ const page = () => {
     fetchData();
   }, [page]);
 
-  function determineLanguage(fileContent) {
-  if (fileContent.includes('function') && fileContent.includes('var')) {
-    return 'javascript';
-  } else if (fileContent.includes('def') && fileContent.includes('print')) {
-    return 'python';
-  } else if (fileContent.includes('public static void main')) {
-    return 'java';
-  } else if (fileContent.includes('using System;')) {
-    return 'csharp';
-  } else if (fileContent.includes('puts') && fileContent.includes('end')) {
-    return 'ruby';
-  } else if (fileContent.includes('func main()')) {
-    return 'golang';
-  } else if (fileContent.includes('<html>')) {
-    return 'html';
-  } else if (fileContent.includes('{') && fileContent.includes(':')) {
-    return 'css';
-  } else if (fileContent.includes('{') && fileContent.includes('}')) {
-    return 'json';
-  } else if (fileContent.includes('<') && fileContent.includes('>')) {
-    return 'xml';
-  } else if (fileContent.includes('# ')) {
-    return 'markdown';
-  } else if (fileContent.includes('import') && fileContent.includes('from')) {
-    return 'typescript';
-  } else if (fileContent.includes('defmodule') && fileContent.includes('do')) {
-    return 'elixir';
-  } else {
-    return 'unknown';
-  }
-}
+  // function determineLanguage(fileContent) {
+  //   if (typeof fileContent !== "string") {
+  //     return "unknown";
+  //   }
+  //   if (fileContent.includes("function") && fileContent.includes("var")) {
+  //     return "javascript";
+  //   } else if (fileContent.includes("def") && fileContent.includes("print")) {
+  //     return "python";
+  //   } else if (fileContent.includes("public static void main")) {
+  //     return "java";
+  //   } else if (fileContent.includes("using System;")) {
+  //     return "csharp";
+  //   } else if (fileContent.includes("puts") && fileContent.includes("end")) {
+  //     return "ruby";
+  //   } else if (fileContent.includes("func main()")) {
+  //     return "golang";
+  //   } else if (fileContent.includes("<html>")) {
+  //     return "html";
+  //   } else if (fileContent.includes("{") && fileContent.includes(":")) {
+  //     return "css";
+  //   } else if (fileContent.includes("{") && fileContent.includes("}")) {
+  //     return "json";
+  //   } else if (fileContent.includes("<") && fileContent.includes(">")) {
+  //     return "xml";
+  //   } else if (fileContent.includes("# ")) {
+  //     return "markdown";
+  //   } else if (fileContent.includes("import") && fileContent.includes("from")) {
+  //     return "typescript";
+  //   } else if (
+  //     fileContent.includes("defmodule") &&
+  //     fileContent.includes("do")
+  //   ) {
+  //     return "elixir";
+  //   } else {
+  //     return "unknown";
+  //   }
+  // }
 
   useEffect(() => {
     updateData();
@@ -196,16 +200,12 @@ const page = () => {
       // Handle rename error (e.g., inform user)
     }
   };
- 
 
-const handleShare = async () => {
-  //  copy text to clipboard
-  navigator.clipboard.writeText(editedFileDataRef.current);
-  
-}
+  const handleShare = async () => {
+    //  copy text to clipboard
+    navigator.clipboard.writeText(editedFileDataRef.current);
+  };
 
-
- 
   return (
     <div className="w-full h-full">
       {page !== "default" ? (
@@ -223,10 +223,7 @@ const handleShare = async () => {
             <div className="flex items-center h-full">
               {isShared ? (
                 <div className="flex gap-2">
-                  <button className="flex items-center justify-center gap-2 text-white bg-opacity-25 border-gray-500 no-select border-opacity-20 border-[1px] bg-gray-500 p-2 rounded-md"
- 
-                    
-                  >
+                  <button className="flex items-center justify-center gap-2 text-white bg-opacity-25 border-gray-500 no-select border-opacity-20 border-[1px] bg-gray-500 p-2 rounded-md">
                     <FaExternalLinkSquareAlt />
                   </button>
                   <button
@@ -280,28 +277,19 @@ const handleShare = async () => {
             >
               <FaRegArrowAltCircleRight size={25} />
             </button>
-            {/* selectros for language based on array */}
-            {/* <select
-              value={fileLanguage}
-              onChange={(e) => setFileLanguage(e.target.value)}
-              className="bg-util bg-opacity-50 p-2 rounded-md"
-            >
-              {languages.map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select> */}
-            <Select onValueChange={
-              (value) => setFileLanguage(value)
-            } 
-            >
+
+            <Select onValueChange={(value) => setFileLanguage(value)}>
               <SelectTrigger>
-                <SelectValue placeholder="select language">{fileLanguage}</SelectValue>
+                <SelectValue placeholder="select language">
+                  {fileLanguage}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {languages.map((lang) => (
-                  <SelectItem value={lang} onClick={() => setFileLanguage(lang)}>
+                  <SelectItem
+                    value={lang}
+                    onClick={() => setFileLanguage(lang)}
+                  >
                     {lang}
                   </SelectItem>
                 ))}
@@ -365,6 +353,7 @@ const handleShare = async () => {
       ) : (
         <div className="w-full h-full flex items-center justify-center text-white text-2xl">
           Select a file to view or edit
+          {/* <span className="text-white"> {appDir}</span> */}
         </div>
       )}
     </div>

@@ -1,8 +1,5 @@
-"use client";
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import { appLocalDataDir } from "@tauri-apps/api/path";
-
 export const useFileOperations = () => {
   const [appDir, setAppDir] = useState("");
   const [isMounted, setIsMounted] = useState(false);
@@ -13,25 +10,34 @@ export const useFileOperations = () => {
       setIsMounted(false);
     };
   }, []);
+
   useEffect(() => {
     if (!isMounted) {
       return;
     }
 
-    appLocalDataDir().then((dir) => {
-      setAppDir(dir);
-    });
+    // Check if window is defined
+    if (typeof window !== "undefined") {
+      // Call the get_app_dir command to get the app directory
+      invoke("get_app_dir").then((dir) => {
+        setAppDir(dir + "snippet-manager/");
+      });
+    }
   }, [isMounted]);
 
   const createFile = (file_name, file_content) => {
     if (!file_name || !file_content) {
       return;
     }
-    return invoke("add_file", {
-      fileName: file_name,
-      fileContent: file_content,
-      appDir: appDir,
-    });
+
+    // Check if window is defined
+    if (typeof window !== "undefined") {
+      return invoke("add_file", {
+        fileName: file_name,
+        fileContent: file_content,
+        appDir: appDir,
+      });
+    }
   };
 
   const getFiles = () => {
@@ -112,7 +118,6 @@ export const useFileOperations = () => {
     getFiles,
     deleteFile,
     renameFile,
-    deleteFile,
     updateFile,
     getAppDir,
     getDirectories,

@@ -1,5 +1,9 @@
 ## Snippet manager
 
+![editor](/github/editor.jpeg)
+![snippet](/github/snippet.jpeg)
+![install](/github/installation.jpeg)
+
 ## Technologies
 
 - Rust (backend)
